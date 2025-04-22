@@ -12,7 +12,11 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::latest()->get();
+        // $products = Product::latest()->get();
+        $products = Product::where('user_id', Auth::id())
+            ->latest()
+            ->get();
+
         return view('products.index', compact('products'));
     }
 
@@ -68,38 +72,27 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
+        // cegah user mengakses product milik orang lain 
+        if ($product->user_id !== Auth::id()) {
+            abort(403); // Forbidden
+        }
+
         return view('products.edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)
     {
+        // cegah user mengakses product milik orang lain 
+        if ($product->user_id !== Auth::id()) {
+            abort(403); // Forbidden
+        }
+
         $validated = $request->validate([
             'name' => 'required',
             'description' => 'nullable',
             'price' => 'required|numeric',
             'image' => 'nullable|image|max:2048'
         ]);
-
-        // if ($request->hasFile('image')) {
-        //     // delete old
-        //     if ($product->image) {
-        //         Storage::disk('public')->delete($product->image);
-        //     }
-        //     $validated['image'] = $request->file('image')->store('products', 'public');
-        // }
-
-        // yang baru
-        // if ($request->hasFile('image')) {
-        //     dd("image uploaded", $request->file('image'));
-
-        //     if ($product->image && file_exists(public_path($product->image))) {
-        //         unlink(public_path($product->image));
-        //     }
-
-        //     $imageName = Str::uuid() . '.' . $request->file('image')->getClientOriginalExtension();
-        //     $request->file('image')->move(public_path('uploads'), $imageName);
-        //     $validated['image'] = 'uploads/' . $imageName;
-        // }
 
         if ($request->hasFile('image')) {
             logger('image uploaded');
@@ -132,6 +125,11 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        // cegah user mengakses product milik orang lain 
+        if ($product->user_id !== Auth::id()) {
+            abort(403); // Forbidden
+        }
+
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
@@ -140,7 +138,6 @@ class ProductController extends Controller
     }
 }
 
-// public function store(Request $request)
     // {
     //     $validated = $request->validate([
     //         'name' => 'required',
