@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -57,6 +58,9 @@ class ProductController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'image' => 'uploads/' . $imageName,
+            // 'user_id' => auth()->id(),
+            'user_id' => Auth::id(), // ← menggunakan facade
+            // 'user_id' => auth()->user()->id, // ← akses langsung dari objek
         ]);
 
         return redirect()->route('products.index')->with('success', 'Product created successfully!');
