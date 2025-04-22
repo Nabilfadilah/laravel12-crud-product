@@ -35,6 +35,7 @@
         <input type="hidden" name="image_base64" id="imageBase64" />
 
         <button type="submit">Save</button>
+        <a href="{{ route('products.index') }}" class="btn btn-secondary">Back</a>
     </form>
 
     <script>

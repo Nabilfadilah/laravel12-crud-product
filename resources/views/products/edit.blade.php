@@ -24,5 +24,6 @@
         @endif
 
         <button type="submit">Update</button>
+        <a href="{{ route('products.index') }}" class="btn btn-secondary">Back</a>
     </form>
 @endsection
