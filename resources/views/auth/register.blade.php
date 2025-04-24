@@ -32,43 +32,50 @@
 
 <body>
     <div class="d-flex justify-content-center align-items-center vh-100">
+        <!-- card registrasi -->
         <div class="card shadow-sm p-4 register-card" style="width: 100%; max-width: 400px;">
             <h4 class="text-center mb-4">Register Akun Anda</h4>
 
+            <!-- Form register -->
             <form method="POST" action="{{ route('register') }}">
-                @csrf
+                @csrf <!-- token CSRF -->
 
+                {{-- nama --}}
                 <div class="mb-3">
                     <label for="name" class="form-label">Nama</label>
                     <input type="text" name="name" class="form-control" id="name" placeholder="Name" required
                         autofocus>
                 </div>
 
+                {{-- email --}}
                 <div class="mb-3">
                     <label for="email" class="form-label">Alamat Email</label>
                     <input type="email" name="email" class="form-control" id="email"
                         placeholder="email@example.com" required autofocus>
                 </div>
 
+                {{-- password --}}
                 <div class="mb-3">
                     <label for="password" class="form-label">Kata Sandi</label>
                     <input type="password" name="password" class="form-control" placeholder="Password" required
                         autofocus>
                 </div>
 
+                {{-- konfir password --}}
                 <div class="mb-3">
                     <label for="password" class="form-label">Konfirmasi Kata Sandi</label>
                     <input type="password" name="password_confirmation" class="form-control"
                         placeholder="Confirm Password" required>
                 </div>
 
+                {{-- button --}}
                 <button type="submit" class="btn btn-primary w-100">Register</button>
 
+                <!-- link ke halaman login -->
                 <div class="text-center mt-3">
                     <p>Sudah punya akun? <a href="/login">Login</a></p>
                 </div>
             </form>
-
         </div>
     </div>
 </body>
