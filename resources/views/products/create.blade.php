@@ -27,7 +27,15 @@
     <div class="card shadow-sm">
         <div class="card-body">
             <h5 class="card-title mb-4">Tambah Produk Baru</h5>
+
+
+            <!-- Form untuk menyimpan data produk baru -->
+            {{-- action: Tujuan data form dikirim (ke route 'products.store').
+                 method="POST": Untuk menyimpan data ke server.
+                 enctype="multipart/form-data": Agar bisa upload file --}}
             <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+
+                <!-- Token CSRF: penting untuk keamanan agar request dari form ini dianggap sah oleh Laravel -->
                 @csrf
 
                 {{-- name product --}}
@@ -101,15 +109,25 @@
             <script>
                 // Script konversi gambar ke Base64
                 document.getElementById('imageInput').addEventListener('change', function(e) {
+                    // ambil file gambar pertama yang dipilih user dari input file
                     const file = e.target.files[0];
+
+                    // buat objek FileReader untuk membaca isi file
                     const reader = new FileReader();
+
+                    // event ketika proses pembacaan file selesai
                     reader.onloadend = function() {
+                        // set hasil pembacaan (base64) ke input hidden dengan id 'imageBase64'
+                        // jadi kita bisa kirim string Base64-nya ke server saat submit form
                         document.getElementById('imageBase64').value = reader.result;
                     };
+
+                    // kalau ada file yang dipilih, mulai proses pembacaan file sebagai Data URL (base64)
                     if (file) {
                         reader.readAsDataURL(file);
                     }
                 });
+
 
                 // konvert image
                 // document.getElementById('imageInput').addEventListener('change', function(e) {
