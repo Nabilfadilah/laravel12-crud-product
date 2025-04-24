@@ -5,6 +5,7 @@
         <h2 class="fw-bold">User List</h2>
     </div>
 
+    {{-- alert ketika success add product --}}
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -22,16 +23,23 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{-- menampilkan daftar user dalam table --}}
                     @foreach ($users as $user)
                         <tr>
+                            {{-- no data --}}
                             <td class="text-center">{{ $loop->iteration }}.</td>
+
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->role }}</td>
+
+                            {{-- button aksi --}}
                             <td class="text-center">
                                 <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-warning">Edit</a>
                                 <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline;">
-                                    @csrf @method('DELETE')
+                                    @csrf <!-- proteksi CSRF -->
+                                    @method('DELETE') <!-- karena method HTTP delete itu DELETE -->
+
                                     <button type="submit" class="btn btn-sm btn-danger"
                                         onclick="return confirm('Hapus user ini?')">Delete</button>
                                 </form>
