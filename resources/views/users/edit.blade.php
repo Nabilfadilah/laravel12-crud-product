@@ -5,8 +5,10 @@
         <div class="card-body">
             <h5 class="card-title mb-4">Edit Produk</h5>
 
+            <!-- form edit user, dikirim ke route update dengan user id -->
             <form method="POST" action="{{ route('users.update', $user) }}">
-                @csrf @method('PUT')
+                @csrf <!-- proteksi CSRF -->
+                @method('PUT') <!-- karena method HTTP update itu PUT -->
 
                 {{-- name --}}
                 <div class="mb-3">
@@ -31,9 +33,12 @@
 
                 {{-- button --}}
                 <div class="d-flex justify-content-center gap-3">
+                    <!-- tombol kembali ke list user -->
                     <a href="{{ route('users.index') }}" class="btn btn-sm btn-secondary">
                         <i class="bi bi-arrow-left"></i> Kembali
                     </a>
+
+                    <!-- tombol untuk update data user -->
                     <button type="submit" class="btn btn-sm btn-primary">
                         <i class="bi bi-save"></i> Update
                     </button>
