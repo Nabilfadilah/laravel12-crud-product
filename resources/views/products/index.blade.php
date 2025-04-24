@@ -3,9 +3,11 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="fw-bold">Product List</h4>
+        {{-- route ke page create product --}}
         <a href="{{ route('products.create') }}" class="btn btn-sm btn-primary">+ Add Product</a>
     </div>
 
+    {{-- alert ketika success add product --}}
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -24,22 +26,31 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{-- menampilkan daftar product dalam table --}}
                     @foreach ($products as $product)
                         <tr>
+                            {{-- no data --}}
                             <td class="text-center">{{ $loop->iteration }}.</td>
+
+                            {{-- image --}}
                             <td>
                                 @if ($product->image)
                                     <img src="{{ asset($product->image) }}" alt="Product Image" width="100">
                                 @endif
                             </td>
+
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->description }}</td>
                             <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+
+                            {{-- button aksi --}}
                             <td class="text-center">
                                 <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                 <form action="{{ route('products.destroy', $product->id) }}" method="POST"
                                     class="d-inline">
-                                    @csrf @method('DELETE')
+                                    @csrf <!-- proteksi CSRF -->
+                                    @method('DELETE') <!-- karena method HTTP delete itu DELETE -->
+
                                     <button type="submit" class="btn btn-sm btn-danger"
                                         onclick="return confirm('Hapus produk ini?')">Delete</button>
                                 </form>
