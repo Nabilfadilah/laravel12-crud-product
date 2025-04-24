@@ -17,6 +17,8 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    // daftar atribut yang bisa diisi (dari form)
     protected $fillable = [
         'name',
         'email',
@@ -29,6 +31,8 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    // atribut yang akan disembunyikan saat data dikonversi ke array atau JSON
     protected $hidden = [
         'password',
         'remember_token',
@@ -39,11 +43,13 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
+    // cast atribut ke tipe tertentu
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'email_verified_at' => 'datetime', // waktu verifikasi email akan dibaca sebagai datetime
+            'password' => 'hashed', // password otomatis di-hash oleh Laravel
         ];
     }
 }
